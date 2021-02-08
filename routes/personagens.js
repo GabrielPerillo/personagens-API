@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('../mysql').pool;
 
-// RETORNA TODOS OS personagens
+// RETORNA TODOS OS PERSONAGENS CADASTRADOS
 router.get('/', (req, res, next) => {
 
     mysql.getConnection((error, conn) => {
@@ -24,7 +24,7 @@ router.get('/', (req, res, next) => {
                             request: {
                                 tipo: 'GET',
                                 descricao: 'Retorna os detalhes de um personagem específico',
-                                url: 'http://localhost:3000/personagens/' + prod.id // Link para quando alguém clicá-lo ser redirecionado para o  'GET' individual do personagem
+                                url: 'http://localhost:3333/personagens/' + prod.id // Link para quando alguém clicá-lo ser redirecionado para o  'GET' individual do personagem
                             }
                         }
                     })
@@ -35,8 +35,9 @@ router.get('/', (req, res, next) => {
     });
 });
 
-// INSERE UM personagem
+// INSERE UM NOVO PERSONAGEM
 router.post('/', (req, res, next) => {
+    console.log(req.body)
     
 
     mysql.getConnection((error, conn) => {
@@ -60,7 +61,7 @@ router.post('/', (req, res, next) => {
                         request: {
                             tipo: 'GET',
                             descricao: 'Retorna todos os personagens',
-                            url: 'http://localhost:3000/personagens'
+                            url: 'http://localhost:3333/personagens'
                         }
                     }
                 }
@@ -72,7 +73,7 @@ router.post('/', (req, res, next) => {
 
 });
 
-// RETORNA OS DADOS DE UM personagem
+// RETORNA OS DADOS DE UM PERSONAGEM ESPECÍFICO
 router.get('/:id', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) {return res.status(500).send({error: error})}
@@ -99,7 +100,7 @@ router.get('/:id', (req, res, next) => {
                         request: {
                             tipo: 'GET',
                             descricao: 'Retorna todos os personagens',
-                            url: 'http://localhost:3000/personagens'
+                            url: 'http://localhost:3333/personagens'
                         }
                     }
                 }
@@ -110,7 +111,7 @@ router.get('/:id', (req, res, next) => {
     
 });
 
-// ALTERA UM personagem
+// ALTERA UM PERSONAGEM
 router.patch('/', (req, res, next) => {
 
     mysql.getConnection((error, conn) => {
@@ -143,7 +144,7 @@ router.patch('/', (req, res, next) => {
                         request: {
                             tipo: 'GET',
                             descricao: 'Retorna os detalhes de um personagem específico',
-                            url: 'http://localhost:3000/personagens/' + req.body.id
+                            url: 'http://localhost:3333/personagens/' + req.body.id
                         }
                     }
                 }
@@ -155,7 +156,7 @@ router.patch('/', (req, res, next) => {
     });
 });
 
-// EXCLUI UM personagem
+// EXCLUI UM PERSONAGEM
 router.delete('/', (req, res, next) => {
 
     mysql.getConnection((error, conn) => {
@@ -172,7 +173,7 @@ router.delete('/', (req, res, next) => {
                     request: {
                         tipo: 'POST',
                         descricao: 'Insere um personagem',
-                        url: 'http://localhost:3000/personagens',
+                        url: 'http://localhost:3333/personagens',
                         body: {
                             nome: 'String',
                             preco: 'Number'

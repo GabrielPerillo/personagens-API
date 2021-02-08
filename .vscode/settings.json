@@ -5,13 +5,13 @@
                 "authProtocol": "default"
             },
             "previewLimit": 50,
-            "server": "localhost",
-            "port": 3306,
+            "server": "mysql742.umbler.com",
+            "port": 41890,
             "driver": "MariaDB",
-            "name": "ecommerce-local",
-            "database": "ecommerce",
-            "username": "root",
-            "password": ""
+            "name": "teste mkt",
+            "database": "testegabriel",
+            "username": "testegabriel",
+            "password": "gabrielMAKTUB2021"
         }
     ]
 }
