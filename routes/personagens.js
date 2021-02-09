@@ -111,59 +111,60 @@ router.get('/:id', (req, res, next) => {
     
 });
 
-// ALTERA UM PERSONAGEM
-router.patch('/', (req, res, next) => {
 
+// ALTERA PERSONAGEM
+router.put('/:id', (req, res, next) => {
+    console.log(req.body)
+    
     mysql.getConnection((error, conn) => {
+        
         if (error) {return res.status(500).send({error: error})}
         conn.query(
             `UPDATE personagens
                 SET nome = ?,
-                    descricao_curta = ?,
-                    descricao_completa = ?,
-                    url_imagem = ?
+                descricao_curta = ?,
+                descricao_completa = ?,
+                url_imagem = ?
                 WHERE id = ?`,
-            [   
-                req.body.nome, 
+                [
+                req.body.nome,
                 req.body.descricao_curta,
                 req.body.descricao_completa,
-                req.body.url_imagem, 
-                req.body.id],
+                req.body.url_imagem,
+                req.params.id
+                ],
             (error, resultado, field) => {
                 conn.release();
                 
                 if (error) {return res.status(500).send({error: error})}
                 const response = {
-                    mensagem: 'personagem atualizado com sucesso',
-                    personagemCriado: {
-                        id: req.body.id,
-                        nome: req.body.nome,
-                        descricao_curta: req.body.descricao_curta,
-                        descricao_completa: req.body.descricao_completa,
-                        url_imagem: req.body.url_imagem,
-                        request: {
-                            tipo: 'GET',
-                            descricao: 'Retorna os detalhes de um personagem específico',
-                            url: 'http://localhost:3333/personagens/' + req.body.id
-                        }
+                    mensagem: 'personagem alterado com sucesso',
+                    request: {
+                        tipo: 'GET',
+                        descricao: 'Retorna os detalhes de um personagem específico',
+                        url: 'http://localhost:3333/personagens/' + req.body.id
+
                     }
                 }
-                return res.status(202).send(response);
                 
+                return res.status(202).send(response);
             }
                 
         )
     });
+
 });
 
-// EXCLUI UM PERSONAGEM
-router.delete('/', (req, res, next) => {
-
+// DELETA PERSONAGEM
+router.delete('/:id', (req, res, next) => {
+    
+    
     mysql.getConnection((error, conn) => {
+        
         if (error) {return res.status(500).send({error: error})}
         conn.query(
             `DELETE FROM personagens WHERE id = ?`,
-            [req.body.id],
+            [req.params.id],
             (error, resultado, field) => {
                 conn.release();
                 
@@ -176,10 +177,14 @@ router.delete('/', (req, res, next) => {
                         url: 'http://localhost:3333/personagens',
                         body: {
                             nome: 'String',
-                            preco: 'Number'
+                            descricao_curta: 'String',
+                            descricao_completa: 'String',
+                            url_imagem: 'String'
+                            
                         }
                     }
                 }
+                
                 return res.status(202).send(response);
             }
                 
